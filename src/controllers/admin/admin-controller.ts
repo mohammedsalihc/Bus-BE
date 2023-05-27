@@ -46,6 +46,10 @@ export class AdminController extends ControllerHandler {
   approveBus = async (request: ExpressRequest, response: ExpressResponse) => {
     try {
       const busId = request.params.id;
+      const bus=await this.adminService.getBus(busId)
+      if(!bus){
+        return this.error(response,400,CommonErroMessages.bus_not_found)
+      }
       const approveBus = await this.adminService.ApproveBus(busId, { approved: true })
       this.jsonResponse<IBus>(response,approveBus)
     } catch (e) {

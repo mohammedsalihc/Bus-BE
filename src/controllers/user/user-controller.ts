@@ -3,6 +3,7 @@ import {
   ExpressRequest,
   ExpressResponse,
   IBus,
+  IComplaint,
   IToken,
   IUser,
 } from "../../constants/interfaces/interface";
@@ -10,6 +11,7 @@ import { CommonErroMessages } from "../../constants/variables/constants";
 import { userService } from "../../services/user/user-service"; 
 import { BcryptHandler } from "../../utilities/bcryptHandler"; 
 import { ControllerHandler } from "../../utilities/controller-handlers"; 
+import { dateToUtc, getCurrentDateandTime } from "../../utilities/moment-handler";
 import { JwtHandler } from "../../utilities/tokenHandler";
 
 export class UserController extends ControllerHandler {
@@ -73,6 +75,31 @@ export class UserController extends ControllerHandler {
       const bus_type=request.query.bus_type;
       const buses=await this.userService.listBuses(location as string,from as string,to as string,bus_type as string)
       this.jsonResponse<IBus[]>(response,buses)
+    }catch(e){
+      this.error(response,500,undefined,e)
+    }
+  }
+
+  createComplaint=async(request:ExpressRequest,response:ExpressResponse)=>{
+    try{
+      let body:IComplaint=request.body;
+      let userId=request.payload?.user
+      if(!body?.bus||!body?.problem){
+        return this.error(response,400,CommonErroMessages.required_fields)
+      }
+      let bus=await this.userService.getbus(body?.bus as string)
+      if(!bus){
+        return this.error(response,400,CommonErroMessages.bus_not_found)
+      }
+      let create_complaint:IComplaint={
+        problem:body?.problem,
+        comment:body?.comment,
+        created:dateToUtc(getCurrentDateandTime()),
+        bus:bus?._id,
+        user:userId as string
+      }
+      let complaint=await this.userService.createComplaint(create_complaint)
+      this.jsonResponse<IComplaint>(response,complaint)
     }catch(e){
       this.error(response,500,undefined,e)
     }

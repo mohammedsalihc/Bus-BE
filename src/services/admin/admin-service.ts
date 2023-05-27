@@ -11,4 +11,8 @@ export class AdminSerivice{
     ApproveBus=async(_id:string,update:IBus):Promise<IBus|null>=>{
         return await BusModel.findOneAndUpdate({_id},update,{new:true})
     }
+
+    getBus=async(_id:string):Promise<IBus|null>=>{
+        return await BusModel.findOne({_id})
+    }
 }

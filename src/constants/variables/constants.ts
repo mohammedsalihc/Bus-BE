@@ -16,5 +16,6 @@ export const CommonErroMessages={
     incorrect_password:"incorrect password",
     owner_already_exist:"bus owner already exist",
     owner_not_found:"bus owner not found",
-    invalid_bus_type:"invalid bus type"
+    invalid_bus_type:"invalid bus type",
+    bus_not_found:"bus not found"
 }
