@@ -32,3 +32,10 @@ export interface IAdmin{
     role?:string,
     password?:string
 }
+
+export interface IBusOwner{
+    name?:string,
+    email?:string,
+    role?:string,
+    password?:string,
+}

@@ -8,7 +8,7 @@ const registeredEndPoints=(app:Application)=>{
     app.use('/BISS/api/admin',admin_route)
     app.use('/BISS/api/user',user_route)
     app.use('/BISS/api/bus-owner',bus_owner_route)
-
+    
 }
 
 export {registeredEndPoints}
