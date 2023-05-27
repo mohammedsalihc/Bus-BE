@@ -1,6 +1,7 @@
 import { BusModel } from "../../Models/bus-owner/bus-model";
+import { ComplaintModel } from "../../Models/user/complain_model";
 import { UserModel } from "../../Models/user/usermodel";
-import { IBus, IUser } from "../../constants/interfaces/interface";
+import { IBus, IComplaint, IUser } from "../../constants/interfaces/interface";
 
 export class userService {
 
@@ -30,5 +31,13 @@ export class userService {
           query.bus_type = bus_type;
         }
         return await BusModel.find(query);
-      }
+    }
+
+    getbus=async(_id:string):Promise<IBus|null>=>{
+        return await BusModel.findOne({_id,approved:true})
+    }
+
+    createComplaint=async(body:IComplaint):Promise<IComplaint>=>{
+        return await ComplaintModel.create(body)
+    }
 }

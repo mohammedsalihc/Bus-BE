@@ -43,6 +43,7 @@ export interface IBusOwner{
 }
 
 export interface IBus{
+    _id?:string
     name?:string //bus name,
     bus_type?:BusType//bus type,
     location?:string//bus area location,
@@ -55,4 +56,13 @@ export interface IBus{
     approved?:boolean,//admin approved or not
     bus_code?:string,//generated bus code
     bus_owner?:IBusOwner|string, //bus owner
+}
+
+
+export interface IComplaint{
+    problem?:String,//problem title
+    comment?:String,//describe user problems
+    bus?:IBus|String,//bus name and detais,
+    created?:Moment,//date and time
+    user:IUser|string//created user
 }
