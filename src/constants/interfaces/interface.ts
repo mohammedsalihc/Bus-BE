@@ -25,3 +25,10 @@ export interface IUser{
 export interface IToken{
     token?:string // generated token
 }
+
+export interface IAdmin{
+    _id?:string,
+    email?:string,
+    role?:string,
+    password?:string
+}
