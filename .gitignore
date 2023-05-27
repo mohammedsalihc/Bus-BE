@@ -1,0 +1,13 @@
+package-lock.json
+
+# comapiled output
+/dist
+
+#dependencies
+node_modules
+
+#
+.env
+
+#logs
+logs
