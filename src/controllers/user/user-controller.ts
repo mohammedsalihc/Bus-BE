@@ -52,7 +52,7 @@ export class UserController extends ControllerHandler {
         if(!user){
           return this.error(response,401,CommonErroMessages.user_not_found)
         }
-        const validate_user=await this.bcrypt.verifyPassword(user?.password as string,body?.password)
+        const validate_user=await this.bcrypt.verifyPassword(user?.password as any,body?.password)
         if(!validate_user){
           return this.error(response,401,CommonErroMessages.incorrect_password)
         }

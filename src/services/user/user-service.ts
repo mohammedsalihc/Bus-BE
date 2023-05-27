@@ -1,4 +1,4 @@
-import { UserModel } from "../../Models/usermodel";
+import { UserModel } from "../../Models/user/usermodel";
 import { IUser } from "../../constants/interfaces/interface";
 
 export class userService {
