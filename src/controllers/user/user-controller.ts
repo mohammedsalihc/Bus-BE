@@ -6,9 +6,9 @@ import {
   IUser,
 } from "../../constants/interfaces/interface";
 import { CommonErroMessages } from "../../constants/variables/constants";
-import { userService } from "../../services/user/user-service";
-import { BcryptHandler } from "../../utilities/bcryptHandler";
-import { ControllerHandler } from "../../utilities/controller-handlers";
+import { userService } from "../../services/user/user-service"; 
+import { BcryptHandler } from "../../utilities/bcryptHandler"; 
+import { ControllerHandler } from "../../utilities/controller-handlers"; 
 import { JwtHandler } from "../../utilities/tokenHandler";
 
 export class UserController extends ControllerHandler {
@@ -52,7 +52,7 @@ export class UserController extends ControllerHandler {
         if(!user){
           return this.error(response,401,CommonErroMessages.user_not_found)
         }
-        const validate_user=await this.bcrypt.verifyPassword(user.password,body?.password)
+        const validate_user=await this.bcrypt.verifyPassword(user?.password as string,body?.password)
         if(!validate_user){
           return this.error(response,401,CommonErroMessages.incorrect_password)
         }
