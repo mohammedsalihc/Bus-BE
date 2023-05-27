@@ -3,6 +3,7 @@ import {
   ExpressRequest,
   ExpressResponse,
   IAdmin,
+  IBus,
   IToken,
 } from "../../constants/interfaces/interface";
 import { ControllerHandler } from "../../utilities/controller-handlers";
@@ -42,5 +43,14 @@ export class AdminController extends ControllerHandler {
     }
   };
 
-  
+  approveBus = async (request: ExpressRequest, response: ExpressResponse) => {
+    try {
+      const busId = request.params.id;
+      const approveBus = await this.adminService.ApproveBus(busId, { approved: true })
+      this.jsonResponse<IBus>(response,approveBus)
+    } catch (e) {
+      this.error(response, 500, undefined, e)
+    }
+  }
+
 }
