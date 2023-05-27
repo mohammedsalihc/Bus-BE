@@ -2,6 +2,7 @@ import { Role } from "../../constants/enums/role-enum";
 import {
   ExpressRequest,
   ExpressResponse,
+  IBus,
   IToken,
   IUser,
 } from "../../constants/interfaces/interface";
@@ -63,5 +64,18 @@ export class UserController extends ControllerHandler {
     }
   }
 
+
+  ListBus=async(request:ExpressRequest,response:ExpressResponse)=>{
+    try{
+      const location=request.query.location;
+      const from=request.query.from;
+      const to=request.query.to
+      const bus_type=request.query.bus_type;
+      const buses=await this.userService.listBuses(location as string,from as string,to as string,bus_type as string)
+      this.jsonResponse<IBus[]>(response,buses)
+    }catch(e){
+      this.error(response,500,undefined,e)
+    }
+  }
 
 }
