@@ -1,6 +1,7 @@
 import { AdminModel } from "../../Models/admin/admin-model";
 import { BusModel } from "../../Models/bus-owner/bus-model";
-import { IAdmin, IBus } from "../../constants/interfaces/interface";
+import { ComplaintModel } from "../../Models/user/complain_model";
+import { IAdmin, IBus, IComplaint } from "../../constants/interfaces/interface";
 
 export class AdminSerivice{
    
@@ -15,4 +16,14 @@ export class AdminSerivice{
     getBus=async(_id:string):Promise<IBus|null>=>{
         return await BusModel.findOne({_id})
     }
+
+    listAllComplaints=async():Promise<IComplaint[]>=>{
+        return await ComplaintModel.find()
+    }
+
+    listAllBuses=async():Promise<IBus[]>=>{
+        return await BusModel.find({approved:true})
+    }
+
+    
 }

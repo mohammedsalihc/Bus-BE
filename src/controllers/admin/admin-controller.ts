@@ -4,6 +4,7 @@ import {
   ExpressResponse,
   IAdmin,
   IBus,
+  IComplaint,
   IToken,
 } from "../../constants/interfaces/interface";
 import { ControllerHandler } from "../../utilities/controller-handlers";
@@ -56,5 +57,26 @@ export class AdminController extends ControllerHandler {
       this.error(response, 500, undefined, e)
     }
   }
+
+  listAllComplaints=async(request:ExpressRequest,response:ExpressResponse)=>{
+    try{
+      const page=request.query.page;
+      let complaints= await this.adminService.listAllComplaints()
+      this.jsonResponse<IComplaint[]>(response,complaints)
+    }catch(e){
+      this.error(response,500,undefined,e)
+    }
+  }
+
+  listAllBuses=async(request:ExpressRequest,response:ExpressResponse)=>{
+    try{
+      const page=request.query.page;
+      let buses=await this.adminService.listAllBuses()
+    }catch(e){
+      this.error(response,500,undefined,e)
+    }
+
+  }
+
 
 }

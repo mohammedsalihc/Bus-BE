@@ -9,7 +9,7 @@ const jwtHandler= new JwtHandler()
 router.post('/register',(req,res)=>bus_owner.register(req,res))
 router.post('/login',(req,res)=>bus_owner.login(req,res))
 router.post('/bus-registration',jwtHandler.accessPermission([Role.BUS_OWNER]),(req,res)=>bus_owner.BusRegistration(req,res))
-
+router.get('/bus-complaints',jwtHandler.accessPermission([Role.BUS_OWNER]),(req,res)=>bus_owner.BusComplaints(req,res))
 
 
 export default router

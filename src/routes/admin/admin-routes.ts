@@ -8,5 +8,6 @@ const admin = new AdminController()
 const jwtHandler= new JwtHandler()
 router.post('/login',(req,res)=>admin.login(req,res))
 router.put('/approve-bus/:id',jwtHandler.accessPermission([Role.ADMIN]),(req,res)=>admin.approveBus(req,res))
-
+router.get('/list-complaints',jwtHandler.accessPermission([Role.ADMIN]),(req,res)=>admin.listAllComplaints)
+router.get('/list-buses',jwtHandler.accessPermission([Role.ADMIN]),(req,res)=>admin.listAllBuses(req,res))
 export default router

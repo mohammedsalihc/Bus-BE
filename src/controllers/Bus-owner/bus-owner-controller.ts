@@ -5,6 +5,7 @@ import {
     ExpressResponse,
     IBus,
     IBusOwner,
+    IComplaint,
     IToken,
 } from "../../constants/interfaces/interface";
 import { CommonErroMessages } from "../../constants/variables/constants";
@@ -119,12 +120,26 @@ export class BusOwnerController extends ControllerHandler {
            }
 
            const bus_service=await this.BusOwnerSerivce.createBusService(create_bus_service)
-           console.log(bus_service)
            this.jsonResponse<IBus>(response,bus_service)
         } catch (e) {
             this.error(response, 500, undefined, e)
         }
 
 
+    }
+
+    BusComplaints=async(request:ExpressRequest,response:ExpressResponse)=>{
+        try{
+            let userId=request.payload.user
+            let my_buses=await this.BusOwnerSerivce.findbusforOwner(userId)
+            if(!my_buses){
+                return this.error(response,400,CommonErroMessages.bus_not_found)
+            }
+            let busIds=my_buses.map((bus)=>bus._id)
+            let complaints=await this.BusOwnerSerivce.collectComplaints(busIds)
+            this.jsonResponse<IComplaint[]>(response,complaints)
+        }catch(e){
+            this.error(response,500,undefined,e)
+        }
     }
 }

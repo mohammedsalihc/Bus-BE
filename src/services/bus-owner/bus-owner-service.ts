@@ -1,6 +1,7 @@
 import { BusModel } from "../../Models/bus-owner/bus-model";
 import { BusOwnerModel } from "../../Models/bus-owner/bus-owner-model";
-import { IBus, IBusOwner } from "../../constants/interfaces/interface";
+import { ComplaintModel } from "../../Models/user/complain_model";
+import { IBus, IBusOwner, IComplaint } from "../../constants/interfaces/interface";
 
 export class BusOwnerService{
     getOwner=async(email?:string):Promise<IBusOwner|null>=>{
@@ -13,5 +14,13 @@ export class BusOwnerService{
 
     createBusService=async(body?:IBus):Promise<IBus>=>{
         return (await BusModel.create(body)).populate({path:'bus_owner',select:'-password'})
+    }
+
+    findbusforOwner=async(bus_owner?:string):Promise<IBus[]>=>{
+        return await BusModel.find({bus_owner,approved:true})
+    }
+
+    collectComplaints=async(_ids:string[]):Promise<IComplaint[]>=>{
+        return await ComplaintModel.find({bus:{$in:_ids}})
     }
 }
