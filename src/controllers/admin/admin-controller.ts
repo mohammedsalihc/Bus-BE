@@ -72,6 +72,7 @@ export class AdminController extends ControllerHandler {
     try{
       const page=request.query.page;
       let buses=await this.adminService.listAllBuses()
+      this.jsonResponse<IBus[]>(response,buses)
     }catch(e){
       this.error(response,500,undefined,e)
     }

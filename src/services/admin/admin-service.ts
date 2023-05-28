@@ -18,11 +18,11 @@ export class AdminSerivice{
     }
 
     listAllComplaints=async():Promise<IComplaint[]>=>{
-        return await ComplaintModel.find()
+        return await ComplaintModel.find().populate({path:"user",select:"-password"}).populate('bus')
     }
 
     listAllBuses=async():Promise<IBus[]>=>{
-        return await BusModel.find({approved:true})
+        return await BusModel.find({approved:true}).populate({path:"bus_owner",select:"-password"})
     }
 
     

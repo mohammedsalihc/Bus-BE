@@ -21,6 +21,6 @@ export class BusOwnerService{
     }
 
     collectComplaints=async(_ids:string[]):Promise<IComplaint[]>=>{
-        return await ComplaintModel.find({bus:{$in:_ids}})
+        return await ComplaintModel.find({bus:{$in:_ids}}).populate({path:"user",select:'-password'}).populate('bus')
     }
 }
