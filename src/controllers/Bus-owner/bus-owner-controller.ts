@@ -142,4 +142,17 @@ export class BusOwnerController extends ControllerHandler {
             this.error(response,500,undefined,e)
         }
     }
+
+    profileDetails=async(request:ExpressRequest,response:ExpressResponse)=>{
+        try{
+            let userId=request.payload.user
+            const bus_owner=await this.BusOwnerSerivce.getOwnerById(userId)
+            if(!bus_owner){
+                return this.error(response,400,CommonErroMessages.bus_not_found)
+            }
+            this.jsonResponse<IBusOwner>(response,bus_owner)
+        }catch(e){
+            this.error(response,500,undefined,e)
+        }
+    }
 }

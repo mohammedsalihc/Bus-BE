@@ -12,7 +12,7 @@ const startServer=()=>{
     let port =portNumber()
     middlewares(app)
     registeredEndPoints(app)
-    const server=app.listen(port,()=>console.log(`server started ${port}`))
+    const server=app.listen(port,()=>console.log(`server started port ${port}`))
 }
 
 
