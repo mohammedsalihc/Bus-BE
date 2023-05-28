@@ -40,4 +40,8 @@ export class userService {
     createComplaint=async(body:IComplaint):Promise<IComplaint>=>{
         return await ComplaintModel.create(body)
     }
+
+    getUserBYid=async(_id:string):Promise<IUser>=>{
+      return await UserModel.findOne({_id}).select('-password');
+    }
 }

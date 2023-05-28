@@ -11,6 +11,6 @@ router.post('/register',(req,res)=>user.register(req,res))
 router.post('/login',(req,res)=>user.Login(req,res))
 router.get('/list-bus',jwtHandler.accessPermission([Role.USER]),(req,res)=>user.ListBus(req,res))
 router.post('/create-complaint',jwtHandler.accessPermission([Role.USER]),(req,res)=>user.createComplaint(req,res))
-
+router.get('/profile-detail',jwtHandler.accessPermission([Role.USER]),(req,res)=>user.profileDetail(req,res))
 
 export default router

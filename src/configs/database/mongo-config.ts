@@ -15,7 +15,7 @@ const startMongoDbServer = () => {
     var db = mongoose.connection
     db.on('error', console.error.bind(console, 'db connection error'))
     db.once('open', () => {
-        console.log(`Db connected to url:${url}`)
+        console.log(`Database connected`)
     })
 }
 

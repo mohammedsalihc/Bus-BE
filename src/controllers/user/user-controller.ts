@@ -106,4 +106,17 @@ export class UserController extends ControllerHandler {
     }
   }
 
+  profileDetail=async(request:ExpressRequest,response:ExpressResponse)=>{
+    try{
+       let user_id=request.payload.user;
+       const user=await this.userService.getUserBYid(user_id as string)
+       if(!user){
+        return this.error(response,401,CommonErroMessages.user_not_found)
+       }
+       this.jsonResponse<IUser>(response,user)
+    }catch(e){
+      return this.error(response,500,undefined,e)
+    }
+  }
+
 }
