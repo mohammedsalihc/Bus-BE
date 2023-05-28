@@ -84,6 +84,7 @@ export class UserController extends ControllerHandler {
     try{
       let body:IComplaint=request.body;
       let userId=request.payload?.user
+      console.log('Hello')
       if(!body?.bus||!body?.problem){
         return this.error(response,400,CommonErroMessages.required_fields)
       }
