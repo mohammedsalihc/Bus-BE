@@ -16,4 +16,5 @@ router.get('/profile-detail',accessPermission([Role.BUS_OWNER]),(req,res)=>profi
 
 router.get('/list-location',accessPermission([Role.BUS_OWNER]),(req,res)=>listLocation(req,res))
 
+
 module.exports = router;
