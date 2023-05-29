@@ -18,7 +18,7 @@ const accessToken = async (user, email, role) => {
 
 const createToken = async (user) => {
   const token = await accessToken(user._id, user.email, user.role);
-  return { token };
+  return  token ;
 };
 
 const accessPermission = (roles) => {
