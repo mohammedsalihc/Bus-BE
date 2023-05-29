@@ -1,4 +1,5 @@
 const AdminModel = require("../../Models/admin/admin-model");
+const locationModel = require("../../Models/admin/location-model");
 const BusModel = require("../../Models/bus-owner/bus-model");
 const ComplaintModel = require("../../Models/user/complaint-model");
 
@@ -27,6 +28,10 @@ const AdminService = {
       select: "-password",
     });
   },
+
+  createLocation:async(body)=>{
+    return await locationModel.create(body)
+  }
 };
 
 module.exports = AdminService;

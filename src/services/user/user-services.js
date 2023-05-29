@@ -1,3 +1,4 @@
+const locationModel = require("../../Models/admin/location-model");
 const BusModel = require("../../Models/bus-owner/bus-model");
 const ComplaintModel = require("../../Models/user/complaint-model");
 const UserModel = require("../../Models/user/user-model");
@@ -43,6 +44,10 @@ const userService = {
   
     getUserBYid: async (_id) => {
       return await UserModel.findOne({ _id }).select('-password');
+    },
+
+    listlocation:async()=>{
+      return await locationModel.find()
     }
   };
   

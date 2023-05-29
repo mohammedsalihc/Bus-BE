@@ -1,5 +1,5 @@
 const { CommonErrorMessage } = require("../../constants/variables");
-const {getAdmin,ApproveBus,listAllComplaints,listAllBuses,getBus}=require('../../services/admin/admin-service')
+const {getAdmin,ApproveBus,listAllComplaints,listAllBuses,getBus, createLocation}=require('../../services/admin/admin-service')
 const {getPasswordHash,verifyPassword}=require('../../utils/bcrypt')
 const {createToken}=require('../../utils/token-handler')
 const AdminController = {
@@ -62,6 +62,23 @@ const AdminController = {
         response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });
     }
   },
+
+  addLocation:async(request,response)=>{
+    try{
+      let body=request.body;
+      if(!body?.location){
+        return response.status(400).json({ msg: CommonErrorMessage.required_fields, status: false }); 
+      }
+      let create_location={
+        location:body?.location
+      }
+      const location= await createLocation(create_location)
+      response.status(200).json({ status: true, location });
+    }catch(e){
+      console.log(e)
+      response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });
+    }
+  }
 };
 
 module.exports = AdminController;
