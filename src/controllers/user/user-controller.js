@@ -1,5 +1,5 @@
 const { CommonErrorMessage, Role } = require("../../constants/variables");
-const { userByEmail, createUser, listBuses, createComplaint, getUserBYid, getbus, listlocation } = require("../../services/user/user-services");
+const { userByEmail, createUser, listBuses, createComplaint, getUserBYid, getbus, listlocation, listUserDestination } = require("../../services/user/user-services");
 const { getPasswordHash, verifyPassword } = require("../../utils/bcrypt");
 const { getCurrentDateandTime, dateToUtc } = require("../../utils/moment-handler");
 const { createToken } = require("../../utils/token-handler");
@@ -110,6 +110,17 @@ const UserController = {
     try{
        const locations=await listlocation()
        response.status(200).json({status:true,locations})
+    }catch(e){
+      console.log(e)
+      response.status(500).json({msg:CommonErrorMessage.internal_server,status:false})
+    }
+  },
+
+  listDestination:async(request,response)=>{
+    try{
+      const location=request.query.location;
+      const destination=await listUserDestination(location)
+      response.status(200).json({status:true,destination})
     }catch(e){
       console.log(e)
       response.status(500).json({msg:CommonErrorMessage.internal_server,status:false})

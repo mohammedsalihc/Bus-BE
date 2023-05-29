@@ -48,6 +48,10 @@ const userService = {
 
     listlocation:async()=>{
       return await locationModel.find()
+    },
+
+    listUserDestination:async(location)=>{
+      return await BusModel.find({location}).select('route_from').select('route_to')
     }
   };
   
