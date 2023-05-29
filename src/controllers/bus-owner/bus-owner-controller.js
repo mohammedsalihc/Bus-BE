@@ -1,5 +1,5 @@
 const { BusType, CommonErrorMessage, Role } = require("../../constants/variables");
-const { getOwner, createOwner, createBusService, findBusForOwner, collectComplaints, getOwnerById } = require("../../services/bus-owner/bus-owner-service");
+const { getOwner, createOwner, createBusService, findBusForOwner, collectComplaints, getOwnerById, listBusLoction } = require("../../services/bus-owner/bus-owner-service");
 const { getPasswordHash, verifyPassword } = require("../../utils/bcrypt");
 const { dateToUtc } = require("../../utils/moment-handler");
 const generateRandomCode = require("../../utils/randomcode");
@@ -136,7 +136,17 @@ const busOwnerController = {
             console.log(e)
             response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });
         }
-    }
+    },
+
+    listLocation:async(request,response)=>{
+        try{
+           const locations=await listBusLoction()
+           response.status(200).json({status:true,locations})
+        }catch(e){
+          console.log(e)
+          response.status(500).json({msg:CommonErrorMessage.internal_server,status:false})
+        }
+      }
 };
 
 module.exports = busOwnerController;

@@ -1,3 +1,4 @@
+const locationModel = require("../../Models/admin/location-model");
 const BusModel = require("../../Models/bus-owner/bus-model");
 const BusOwnerModel = require("../../Models/bus-owner/bus-owner-model");
 const ComplaintModel = require("../../Models/user/complaint-model");
@@ -29,6 +30,10 @@ const busService = {
   getOwnerById: async (_id) => {
     return await BusOwnerModel.findOne({ _id }).select('-password');
   },
+
+  listBusLoction:async()=>{
+    return await locationModel.find()
+  }
 };
 
 module.exports = busService;
