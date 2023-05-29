@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { register, login, listBus, createComplaint, profileDetail, listLocation, listDestination } = require("../../controllers/user/user-controller");
+const { register, login, listBus, createComplaint, profileDetail, listLocation, listDestination, listBusType } = require("../../controllers/user/user-controller");
 const { accessPermission } = require("../../utils/token-handler");
 const { Role } = require("../../constants/variables");
 const router = Router();
@@ -17,4 +17,6 @@ router.get('/profile-detail', accessPermission([Role.USER]), (req, res) => profi
 router.get('/list-location',accessPermission([Role.USER]),(req,res)=>listLocation(req,res))
 
 router.get('/list-destination',accessPermission([Role.USER]),(req,res)=>listDestination(req,res))
+
+router.get('/list-bus-types',accessPermission([Role.USER]),(req,res)=>listBusType(req,res))
 module.exports = router;
