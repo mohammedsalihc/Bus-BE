@@ -14,7 +14,9 @@ const busService = {
   },
 
   createBusService: async (body) => {
-    return await BusModel.create(body).populate(bus, { path: 'bus_owner', select: '-password' });
+    const newBus = await BusModel.create(body);
+    const populatedBus = await newBus.populate('bus_owner', '-password')
+    return populatedBus;
   },
 
   findBusForOwner: async (bus_owner) => {
