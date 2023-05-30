@@ -76,8 +76,8 @@ const busOwnerController = {
                 route_to: body?.route_to,
                 wifi: body?.wifi,
                 air_condition: body?.air_condition,
-                starting_time: dateToUtc(body?.starting_time),
-                ending_time: dateToUtc(body.ending_time),
+                starting_time:body?.starting_time,
+                ending_time: body?.ending_time,
                 bus_code: generateRandomCode(4),
                 bus_owner: userId
             };
