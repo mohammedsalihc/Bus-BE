@@ -1,3 +1,4 @@
+const busTypModel = require("../../Models/admin/bus-type-model");
 const locationModel = require("../../Models/admin/location-model");
 const BusModel = require("../../Models/bus-owner/bus-model");
 const BusOwnerModel = require("../../Models/bus-owner/bus-owner-model");
@@ -33,6 +34,10 @@ const busService = {
 
   listBusLoction:async()=>{
     return await locationModel.find()
+  },
+
+  listbustypeForowner:async(location)=>{
+    return await busTypModel.find()
   }
 };
 

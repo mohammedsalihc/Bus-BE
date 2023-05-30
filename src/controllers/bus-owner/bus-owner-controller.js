@@ -1,5 +1,5 @@
 const { BusType, CommonErrorMessage, Role } = require("../../constants/variables");
-const { getOwner, createOwner, createBusService, findBusForOwner, collectComplaints, getOwnerById, listBusLoction } = require("../../services/bus-owner/bus-owner-service");
+const { getOwner, createOwner, createBusService, findBusForOwner, collectComplaints, getOwnerById, listBusLoction, listbustypeForowner } = require("../../services/bus-owner/bus-owner-service");
 const { getPasswordHash, verifyPassword } = require("../../utils/bcrypt");
 const { dateToUtc } = require("../../utils/moment-handler");
 const generateRandomCode = require("../../utils/randomcode");
@@ -58,21 +58,6 @@ const busOwnerController = {
         try {
             let body = request.body;
             const userId = request.payload?.user;
-            const bus_types = [
-                BusType.ORDINARY,
-                BusType.LIMITED_STOP_ORDINARY,
-                BusType.TOWN_TO_TOWN_ORDINARY,
-                BusType.FAST_PASSENGER,
-                BusType.LIMITED_STOP_FAST_PASSENGER,
-                BusType.POINT_TO_POINT,
-                BusType.POINT_TO_POINT,
-                BusType.SUPER_FAST,
-                BusType.SUPER_EXTREME,
-                BusType.SUPER_DELUXE,
-                BusType.GARUDA_KING_CLASS,
-                BusType.LOW_FLOOR_AC_VOLVO,
-                BusType.SILVER_LINE_JET
-            ];
             if (!body?.name ||
                 !body?.bus_type ||
                 !body?.location ||
@@ -83,10 +68,6 @@ const busOwnerController = {
             ) {
                 return response.status(400).json({ msg: CommonErrorMessage.required_fields, status: false });
             }
-            if (!bus_types.includes(body?.bus_type)) {
-                return response.status(400).json({ msg: CommonErrorMessage.invalid_bus_type, status: false });
-            }
-
             let create_bus_service = {
                 name: body?.name,
                 bus_type: body?.bus_type,
@@ -146,7 +127,18 @@ const busOwnerController = {
           console.log(e)
           response.status(500).json({msg:CommonErrorMessage.internal_server,status:false})
         }
-      }
+      },
+
+    listbus_type:async(request,response)=>{
+        try{
+            const busTypes=await listbustypeForowner()
+            response.status(200).json({status:true,busTypes})
+        }catch(e){
+            response.status(500).json({msg:CommonErrorMessage.internal_server,status:false})
+        }
+    }  
+
+    
 };
 
 module.exports = busOwnerController;

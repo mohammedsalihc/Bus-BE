@@ -1,4 +1,5 @@
 const AdminModel = require("../../Models/admin/admin-model");
+const busTypModel = require("../../Models/admin/bus-type-model");
 const locationModel = require("../../Models/admin/location-model");
 const BusModel = require("../../Models/bus-owner/bus-model");
 const ComplaintModel = require("../../Models/user/complaint-model");
@@ -31,7 +32,20 @@ const AdminService = {
 
   createLocation:async(body)=>{
     return await locationModel.create(body)
+  },
+
+  createBusType:async(body)=>{
+    return await busTypModel.create(body)
+  },
+
+  getBusType:async(bus_type)=>{
+    return await busTypModel.findOne({bus_type})
+  },
+
+  getLocation:async(location)=>{
+    return await locationModel.findOne({location})
   }
+
 };
 
 module.exports = AdminService;
