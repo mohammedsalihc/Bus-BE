@@ -1,5 +1,5 @@
 const { CommonErrorMessage } = require("../../constants/variables");
-const {getAdmin,ApproveBus,listAllComplaints,listAllBuses,getBus, createLocation}=require('../../services/admin/admin-service')
+const {getAdmin,ApproveBus,listAllComplaints,listAllBuses,getBus, createLocation, getBusType,createBusType, getLocation}=require('../../services/admin/admin-service')
 const {getPasswordHash,verifyPassword}=require('../../utils/bcrypt')
 const {createToken}=require('../../utils/token-handler')
 const AdminController = {
@@ -72,8 +72,33 @@ const AdminController = {
       let create_location={
         location:body?.location
       }
+      const valid_location=await getLocation(body?.location)
+      if(valid_location){
+        return response.status(400).json({ msg: CommonErrorMessage.location_exist, status: false });  
+      }
       const location= await createLocation(create_location)
       response.status(200).json({ status: true, location });
+    }catch(e){
+      console.log(e)
+      response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });
+    }
+  },
+
+  createBusTypes:async(request,response)=>{
+    try{
+      let body=request.body;
+      if(!body?.bus_type){
+        return response.status(400).json({ msg: CommonErrorMessage.required_fields, status: false }); 
+      }
+      const valid_type=await getBusType(body?.bus_type)
+      if(valid_type){
+        return response.status(400).json({ msg: CommonErrorMessage.bus_type_already_exist, status: false }); 
+      }
+      let create_bus_type={
+        bus_type:body?.bus_type
+      }
+      const bus_type=await createBusType(create_bus_type)
+      response.status(200).json({ status: true, bus_type });
     }catch(e){
       console.log(e)
       response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });
