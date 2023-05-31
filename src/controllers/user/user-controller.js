@@ -115,18 +115,27 @@ const UserController = {
       response.status(500).json({msg:CommonErrorMessage.internal_server,status:false})
     }
   },
-
-  listDestination:async(request,response)=>{
-    try{
-      const location=request.query.location;
-      const destination=await listUserDestination(location)
-      response.status(200).json({status:true,destination})
-    }catch(e){
-      console.log(e)
-      response.status(500).json({msg:CommonErrorMessage.internal_server,status:false})
+  listDestination: async (request, response) => {
+    try {
+      const location = request.query.location;
+      const destinations = await listUserDestination(location);
+  
+      
+      const uniqueDestinations = destinations.filter((destination, index, self) => {
+        return (
+          index === self.findIndex(
+            (d) => d.route_from === destination.route_from && d.route_to === destination.route_to
+          )
+        );
+      });
+  
+      response.status(200).json({ status: true, destination: uniqueDestinations });
+    } catch (e) {
+      console.log(e);
+      response.status(500).json({ msg: CommonErrorMessage.internal_server, status: false });
     }
   },
-
+  
   listBusType:async(request,response)=>{
     try{
       const location=request.query.location
@@ -137,6 +146,6 @@ const UserController = {
       response.status(500).json({msg:CommonErrorMessage.internal_server,status:false})
     }
   }
-};
+}
 
 module.exports = UserController;
