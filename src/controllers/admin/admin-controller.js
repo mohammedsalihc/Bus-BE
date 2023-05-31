@@ -1,5 +1,5 @@
 const { CommonErrorMessage } = require("../../constants/variables");
-const {getAdmin,ApproveBus,listAllComplaints,listAllBuses,getBus, createLocation, getBusType,createBusType, getLocation}=require('../../services/admin/admin-service')
+const {getAdmin,ApproveBus,listAllComplaints,listAllBuses,getBus, createLocation, getBusType,createBusType, getLocation, getAdminById}=require('../../services/admin/admin-service')
 const {getPasswordHash,verifyPassword}=require('../../utils/bcrypt')
 const {createToken}=require('../../utils/token-handler')
 const AdminController = {
@@ -99,6 +99,20 @@ const AdminController = {
       }
       const bus_type=await createBusType(create_bus_type)
       response.status(200).json({ status: true, bus_type });
+    }catch(e){
+      console.log(e)
+      response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });
+    }
+  },
+
+  profileDetail:async(request,response)=>{
+    try{
+       let admin_id=request.payload.user;
+       const admin=await getAdminById(admin_id)
+       if(!admin){
+        return response.status(400).json({ msg: CommonErrorMessage.user_not_found, status: false });
+       }  
+       response.status(200).json({status:true,admin})                                                                          
     }catch(e){
       console.log(e)
       response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });

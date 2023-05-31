@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { login, approveBus, listAllBuses, listAllComplaints, addLocation,createBusTypes } = require("../../controllers/admin/admin-controller");
+const { login, approveBus, listAllBuses, listAllComplaints, addLocation,createBusTypes, profileDetail } = require("../../controllers/admin/admin-controller");
 const { accessPermission } = require('../../utils/token-handler');
 const { Role } = require("../../constants/variables");
 
@@ -16,4 +16,5 @@ router.post('/add-location',accessPermission([Role.ADMIN]),(req,res)=>addLocatio
 
 router.post('/add-bus-type',accessPermission([Role.ADMIN]),(req,res)=>createBusTypes(req,res))
 
+router.get('/profile-detail',accessPermission([Role.ADMIN]),(req,res)=>profileDetail(req,res))
 module.exports = router;

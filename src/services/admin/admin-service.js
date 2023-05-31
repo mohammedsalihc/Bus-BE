@@ -44,6 +44,10 @@ const AdminService = {
 
   getLocation:async(location)=>{
     return await locationModel.findOne({location})
+  },
+
+  getAdminById:async(_id)=>{
+    return await AdminModel.findOne({_id}).select('-password')
   }
 
 };
