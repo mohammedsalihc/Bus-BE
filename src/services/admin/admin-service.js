@@ -48,6 +48,10 @@ const AdminService = {
 
   getAdminById:async(_id)=>{
     return await AdminModel.findOne({_id}).select('-password')
+  },
+
+  listUnapprovedBuses:async()=>{
+    return await BusModel.find({approved:false})
   }
 
 };

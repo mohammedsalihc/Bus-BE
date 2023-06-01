@@ -1,5 +1,6 @@
+const { response } = require("express");
 const { CommonErrorMessage } = require("../../constants/variables");
-const {getAdmin,ApproveBus,listAllComplaints,listAllBuses,getBus, createLocation, getBusType,createBusType, getLocation, getAdminById}=require('../../services/admin/admin-service')
+const {getAdmin,ApproveBus,listAllComplaints,listAllBuses,getBus, createLocation, getBusType,createBusType, getLocation, getAdminById, listUnapprovedBuses}=require('../../services/admin/admin-service')
 const {getPasswordHash,verifyPassword}=require('../../utils/bcrypt')
 const {createToken}=require('../../utils/token-handler')
 const AdminController = {
@@ -115,6 +116,15 @@ const AdminController = {
        response.status(200).json({status:true,admin})                                                                          
     }catch(e){
       console.log(e)
+      response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });
+    }
+  },
+
+  listBusForApprove:async(request,response)=>{
+    try{
+      const Buses = await listUnapprovedBuses()
+      response.status(200).json({status:true,Buses}) 
+    }catch(e){
       response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });
     }
   }
