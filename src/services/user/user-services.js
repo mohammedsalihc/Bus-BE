@@ -57,7 +57,12 @@ const userService = {
 
     listBusTypeservice:async(location)=>{
       return await busTypModel.find()
+    },
+
+    listbusForComplaintService:async()=>{
+      return await BusModel.find({approved:true})
     }
+    
   };
   
   module.exports = userService;

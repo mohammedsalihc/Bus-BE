@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { register, login, listBus, createComplaint, profileDetail, listLocation, listDestination, listBusType } = require("../../controllers/user/user-controller");
+const { register, login, listBus, createComplaint, profileDetail, listLocation, listDestination, listBusType, listBusForComplaint } = require("../../controllers/user/user-controller");
 const { accessPermission } = require("../../utils/token-handler");
 const { Role } = require("../../constants/variables");
 const router = Router();
@@ -19,4 +19,6 @@ router.get('/list-location',accessPermission([Role.USER]),(req,res)=>listLocatio
 router.get('/list-destination',accessPermission([Role.USER]),(req,res)=>listDestination(req,res))
 
 router.get('/list-bus-types',accessPermission([Role.USER]),(req,res)=>listBusType(req,res))
+
+router.get('/list-bus-for-complaint',accessPermission([Role.USER]),(req,res)=>listBusForComplaint(req,res))
 module.exports = router;
