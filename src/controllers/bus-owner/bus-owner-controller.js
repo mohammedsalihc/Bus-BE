@@ -68,6 +68,9 @@ const busOwnerController = {
             ) {
                 return response.status(400).json({ msg: CommonErrorMessage.required_fields, status: false });
             }
+            body.name=body?.name.toLowerCase()
+            body.route_from=body?.route_from.toLowerCase()
+            body.route_to=body?.route_to.toLowerCase()
             let create_bus_service = {
                 name: body?.name,
                 bus_type: body?.bus_type,
