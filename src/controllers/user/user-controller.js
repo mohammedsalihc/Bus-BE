@@ -118,18 +118,27 @@ const UserController = {
   listDestination: async (request, response) => {
     try {
       const location = request.query.location;
-      const destinations = await listUserDestination(location);
-  
-      
-      const uniqueDestinations = destinations.filter((destination, index, self) => {
-        return (
-          index === self.findIndex(
-            (d) => d.route_from === destination.route_from && d.route_to === destination.route_to
-          )
-        );
-      });
-  
-      response.status(200).json({ status: true, destination: uniqueDestinations });
+      let destinations = await listUserDestination(location);
+      const routeFromSet = new Set();
+    const routeToSet = new Set();
+
+    const RouteFrom = [];
+    const RouteTo = [];
+
+    destinations.forEach((destination) => {
+      const { route_from, route_to } = destination;
+
+      if (!routeFromSet.has(route_from)) {
+        RouteFrom.push(route_from);
+        routeFromSet.add(route_from);
+      }
+
+      if (!routeToSet.has(route_to)) {
+        RouteTo.push(route_to);
+        routeToSet.add(route_to);
+      }
+    });
+      response.status(200).json({ status: true,RouteFrom,RouteTo })
     } catch (e) {
       console.log(e);
       response.status(500).json({ msg: CommonErrorMessage.internal_server, status: false });

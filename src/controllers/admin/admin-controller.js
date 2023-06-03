@@ -70,6 +70,7 @@ const AdminController = {
       if(!body?.location){
         return response.status(400).json({ msg: CommonErrorMessage.required_fields, status: false }); 
       }
+      body.location=body?.location.toLowerCase()
       let create_location={
         location:body?.location
       }
@@ -91,6 +92,7 @@ const AdminController = {
       if(!body?.bus_type){
         return response.status(400).json({ msg: CommonErrorMessage.required_fields, status: false }); 
       }
+      body.bus_type=body?.bus_type.toUpperCase()
       const valid_type=await getBusType(body?.bus_type)
       if(valid_type){
         return response.status(400).json({ msg: CommonErrorMessage.bus_type_already_exist, status: false }); 
