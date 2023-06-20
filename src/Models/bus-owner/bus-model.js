@@ -11,9 +11,10 @@ const busSchema = new mongoose.Schema({
   air_condition: { type: Boolean, default: false },
   starting_time: { type: String, required: true },
   ending_time: { type: String, required: true },
-  approved: { type: Boolean, default: false },
+  approved: { type: String, default:"false" },
   bus_code: { type: String, required: true },
   bus_owner: { type: String, required: true, ref: "bus_owner" },
+  rejected_reason:{type:String}
 });
 
 const BusModel = mongoose.model("bus", busSchema);

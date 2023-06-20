@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { accessPermission } = require("../../utils/token-handler");
 const { Role } = require("../../constants/variables");
-const { register, login, profileDetails, BusComplaints, BusRegistration, listLocation, listbus_type } = require("../../controllers/bus-owner/bus-owner-controller");
+const { register, login, profileDetails, BusComplaints, BusRegistration, listLocation, listbus_type,listMyBuses } = require("../../controllers/bus-owner/bus-owner-controller");
 const router = Router();
 
 router.post('/register',(req,res)=>register(req,res))
@@ -17,5 +17,7 @@ router.get('/profile-detail',accessPermission([Role.BUS_OWNER]),(req,res)=>profi
 router.get('/list-location',accessPermission([Role.BUS_OWNER]),(req,res)=>listLocation(req,res))
 
 router.get('/list-bus-type',accessPermission([Role.BUS_OWNER]),(req,res)=>listbus_type(req,res))
+
+router.get('/list-rejected-buses',accessPermission([Role.BUS_OWNER]),(req,res)=>listMyBuses(req,res))
 
 module.exports = router;

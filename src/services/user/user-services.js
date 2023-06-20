@@ -14,7 +14,7 @@ const userService = {
     },
   
     listBuses: async (location, route_from, route_to, bus_type) => {
-      const query = { approved: true };
+      const query = { approved: "true" };
   
       if (location) {
         query.location = location;
@@ -36,7 +36,7 @@ const userService = {
     },
   
     getbus: async (_id) => {
-      return await BusModel.findOne({ _id, approved: true });
+      return await BusModel.findOne({ _id, approved: "true" });
     },
   
     createComplaint: async (body) => {
@@ -60,7 +60,7 @@ const userService = {
     },
 
     listbusForComplaintService:async()=>{
-      return await BusModel.find({approved:true})
+      return await BusModel.find({approved:"true"})
     }
     
   };

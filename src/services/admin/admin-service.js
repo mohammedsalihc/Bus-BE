@@ -24,7 +24,7 @@ const AdminService = {
   },
 
   listAllBuses: async () => {
-    return await BusModel.find({ approved: true }).populate({
+    return await BusModel.find({ approved: "true" }).populate({
       path: "bus_owner",
       select: "-password",
     });
@@ -51,7 +51,11 @@ const AdminService = {
   },
 
   listUnapprovedBuses:async()=>{
-    return await BusModel.find({approved:false})
+    return await BusModel.find({approved:"false"})
+  },
+
+  createReason:async(_id,rejected_reason)=>{
+    return await BusModel.findOneAndUpdate({_id},rejected_reason,{new:true})
   }
 
 };

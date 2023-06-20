@@ -20,7 +20,7 @@ const busService = {
   },
 
   findBusForOwner: async (bus_owner) => {
-    return await BusModel.find({ bus_owner, approved: true });
+    return await BusModel.find({ bus_owner, approved: "true" });
   },
 
   collectComplaints: async (_ids) => {
@@ -39,6 +39,10 @@ const busService = {
 
   listbustypeForowner:async(location)=>{
     return await busTypModel.find()
+  },
+
+  listrejectedBuses:async(bus_owner)=>{
+    return await BusModel.find({bus_owner,approved:"failed"})
   }
 };
 

@@ -1,6 +1,6 @@
 const { response } = require("express");
 const { CommonErrorMessage } = require("../../constants/variables");
-const {getAdmin,ApproveBus,listAllComplaints,listAllBuses,getBus, createLocation, getBusType,createBusType, getLocation, getAdminById, listUnapprovedBuses}=require('../../services/admin/admin-service')
+const {getAdmin,ApproveBus,listAllComplaints,listAllBuses,getBus, createLocation, getBusType,createBusType, getLocation, getAdminById, listUnapprovedBuses, createReason}=require('../../services/admin/admin-service')
 const {getPasswordHash,verifyPassword}=require('../../utils/bcrypt')
 const {createToken}=require('../../utils/token-handler')
 const AdminController = {
@@ -36,7 +36,7 @@ const AdminController = {
       if (!bus) {
         return response.status(400).json({ msg: CommonErrorMessage.bus_not_found, status: false });
       }
-      const approveBus = await ApproveBus(busId, { approved: true });
+      const approveBus = await ApproveBus(busId, { approved: "true" });
       response.status(200).json({ status: true, approveBus });
     } catch (e) {
         response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });
@@ -129,7 +129,25 @@ const AdminController = {
     }catch(e){
       response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });
     }
-  }
+  },
+  rejectBus: async (request, response) => {
+    try {
+      const busId = request.params.id;
+      const reason = request.body.reason
+      if(!reason){
+        return response.status(400).json({msg:"please provide reject reason",staus:false})
+      }
+      const bus = await getBus(busId);
+      if (!bus) {
+        return response.status(400).json({ msg: CommonErrorMessage.bus_not_found, status: false });
+      }
+      const approveBus = await ApproveBus(busId, { approved: "failed" });
+      await createReason(busId)
+      response.status(200).json({ status: true, approveBus });
+    } catch (e) {
+        response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });
+    }
+  },
 };
 
 module.exports = AdminController;
