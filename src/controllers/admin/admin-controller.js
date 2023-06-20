@@ -132,7 +132,7 @@ const AdminController = {
   },
   rejectBus: async (request, response) => {
     try {
-      const busId = request.params.id;
+      const busId = request.body.id;
       const reason = request.body.reason
       if(!reason){
         return response.status(400).json({msg:"please provide reject reason",staus:false})

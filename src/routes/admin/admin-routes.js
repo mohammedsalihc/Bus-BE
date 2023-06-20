@@ -20,6 +20,6 @@ router.get('/profile-detail',accessPermission([Role.ADMIN]),(req,res)=>profileDe
 
 router.get('/list-unapproved-buses',accessPermission([Role.ADMIN]),(req,res)=>listBusForApprove(req,res))
 
-router.put('/reject-bus/:id',accessPermission([Role.ADMIN]),(req,res)=>rejectBus(req,res))
+router.post('/reject-bus',accessPermission([Role.ADMIN]),(req,res)=>rejectBus(req,res))
 
 module.exports = router;
