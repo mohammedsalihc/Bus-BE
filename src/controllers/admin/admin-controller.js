@@ -141,9 +141,9 @@ const AdminController = {
       if (!bus) {
         return response.status(400).json({ msg: CommonErrorMessage.bus_not_found, status: false });
       }
-      const approveBus = await ApproveBus(busId, { approved: "failed" });
+      const reject_bus = await ApproveBus(busId, { approved: "failed",reason });
       await createReason(busId)
-      response.status(200).json({ status: true, approveBus });
+      response.status(200).json({ status: true, reject_bus });
     } catch (e) {
         response.status(500).json({ msg:CommonErrorMessage.internal_server, status: false });
     }
